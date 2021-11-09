@@ -24,6 +24,8 @@ public class MeetkundeLauncher {
             toonInformatie(figuur);
             System.out.println();
         }
+
+
     }
 
     public static void toonInformatie(Figuur figuur) {
