@@ -37,4 +37,10 @@ public class Figuur {
             return "Ik ben klein!!!";
         }
     }
+
+    @Override
+    public String toString() {
+        return String.format("Kleur: %s\nOmtrek: %.4f\nOppervlakte: %.4f",
+                this.kleur, this.geefOmtrek(), this.geefOppervlakte());
+    }
 }
