@@ -6,7 +6,7 @@ package model;
  */
 public class Figuur {
     protected static final double GRENSWAARDE_GROOT_FIGUUR = 100.0;
-    protected static final String DEFAULTWAARDE_KLEUR = "groen";
+    protected static final String DEFAULT_KLEUR = "groen";
 
     protected String kleur;
 
@@ -15,7 +15,7 @@ public class Figuur {
     }
 
     public Figuur() {
-       this(DEFAULTWAARDE_KLEUR);
+       this(DEFAULT_KLEUR);
     }
 
     public static String geefDefinitie() {

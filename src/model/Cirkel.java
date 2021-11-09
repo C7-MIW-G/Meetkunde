@@ -4,19 +4,16 @@ package model;
  * @author Vincent Velthuizen <v.r.velthuizen@pl.hanze.nl>
  * Beschrijf de eigenschappen van een cirkel
  */
-public class Cirkel {
-    private static final double GRENSWAARDE_GROOT_FIGUUR = 100.0;
+public class Cirkel extends Figuur {
     private static final int DEFAULT_STRAAL = 1;
-    private static final String DEFAULT_KLEUR = "roze";
 
     private double straal;
     private Punt middelpunt;
-    private String kleur;
 
     public Cirkel(double straal, Punt middelpunt, String kleur) {
+        super(kleur);
         setStraal(straal);
         this.middelpunt = middelpunt;
-        this.kleur = kleur;
     }
 
     public Cirkel(double straal) {
@@ -31,20 +28,14 @@ public class Cirkel {
         return "Een cirkel is een verzameling punten, die allemaal dezelfde afstand tot een middelpunt hebben.";
     }
 
+    @Override
     public double geefOmtrek() {
         return 2 * Math.PI * straal;
     }
 
+    @Override
     public double geefOppervlak() {
         return Math.PI * straal * straal;
-    }
-
-    public String vertelOverGrootte() {
-        if (geefOppervlak() > GRENSWAARDE_GROOT_FIGUUR) {
-            return "Ik ben groot!!!";
-        } else {
-            return "Ik ben klein!!!";
-        }
     }
 
     public double getStraal() {
@@ -58,14 +49,6 @@ public class Cirkel {
         } else {
             this.straal = straal;
         }
-    }
-
-    public String getKleur() {
-        return kleur;
-    }
-
-    public void setKleur(String kleur) {
-        this.kleur = kleur;
     }
 
     public Punt getMiddelpunt() {
