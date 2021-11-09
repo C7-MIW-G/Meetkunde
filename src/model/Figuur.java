@@ -26,12 +26,12 @@ public class Figuur {
         return 0;
     }
 
-    public double geefOppervlak() {
+    public double geefOppervlakte() {
         return 0;
     }
 
     public String vertelOverGrootte() {
-        if (geefOppervlak() > GRENSWAARDE_GROOT_FIGUUR) {
+        if (geefOppervlakte() > GRENSWAARDE_GROOT_FIGUUR) {
             return "Ik ben groot!!!";
         } else {
             return "Ik ben klein!!!";

@@ -34,7 +34,7 @@ public class Cirkel extends Figuur {
     }
 
     @Override
-    public double geefOppervlak() {
+    public double geefOppervlakte() {
         return Math.PI * straal * straal;
     }
 
