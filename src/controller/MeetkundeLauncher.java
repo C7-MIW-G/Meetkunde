@@ -16,8 +16,8 @@ public class MeetkundeLauncher {
         oppervlak.voegFiguurToe(new Rechthoek(3, 2, new Punt(0, 4), "geel"));
         oppervlak.voegFiguurToe(new Rechthoek(5, 2, new Punt(0, 2), "groen"));
         oppervlak.voegFiguurToe(new Rechthoek(5, 2, new Punt(3, 7), "paars"));
-        oppervlak.voegFiguurToe(new Rechthoek(5, 4, new Punt(5, 7), "oranje"));
-        oppervlak.voegFiguurToe(new Rechthoek(5, 3, new Punt(5, 3), "blauw"));
+        oppervlak.voegFiguurToe(new Rechthoek(11, 5, new Punt(5, 7), "oranje"));
+        oppervlak.voegFiguurToe(new Rechthoek(5, 8, new Punt(5, 3), "blauw"));
 
         toonInformatieAlleFiguren(oppervlak.geefFigurenMetGrotereOppervlakte(20));
     }
