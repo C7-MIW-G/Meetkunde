@@ -19,7 +19,7 @@ public class Oppervlak {
     }
 
     public void voegFiguurToe(Figuur figuur) {
-        if (figuurPastAlsVormInOppervlak(figuur)) {
+        if (figuur.pastInOppervlak(lengte, breedte)) {
             mijnFiguren.add(figuur);
             System.out.println("Dit figuur is toegevoegd");
         } else {
@@ -27,32 +27,16 @@ public class Oppervlak {
         }
     }
 
-    public boolean figuurPastAlsVormInOppervlak(Figuur figuur) {
-        boolean past = false;
-
-        if (figuur instanceof Rechthoek) {
-            if (((Rechthoek) figuur).getLengte() <= lengte && ((Rechthoek) figuur).getBreedte() <= breedte) {
-                past = true;
-            }
-        } else if (figuur instanceof Cirkel){
-            if (((Cirkel) figuur).getStraal() <= breedte / 2) {
-                past = true;
-            }
-        }
-
-        return past;
-    }
-
     @Override
     public String toString() {
-        String eenReturn = "";
+        StringBuilder eenReturn = new StringBuilder();
 
         Collections.sort(mijnFiguren);
         for (Figuur figuur : mijnFiguren) {
-            eenReturn += figuur.toString() + "\n\n";
+            eenReturn.append(figuur.toString()).append("\n\n");
         }
 
-        return eenReturn;
+        return eenReturn.toString();
     }
 
     public ArrayList<Figuur> geefFigurenMetGrotereOppervlakte(double grenswaarde) {
