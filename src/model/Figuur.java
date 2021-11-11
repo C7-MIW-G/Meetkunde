@@ -4,7 +4,7 @@ package model;
  * @author Vincent Velthuizen <v.r.velthuizen@pl.hanze.nl>
  * Beschrijf de algemene eigenschappen van een figuur
  */
-public abstract class Figuur {
+public abstract class Figuur implements Comparable<Figuur> {
     protected static final double GRENSWAARDE_GROOT_FIGUUR = 100.0;
     protected static final String DEFAULT_KLEUR = "groen";
 
@@ -38,5 +38,16 @@ public abstract class Figuur {
     public String toString() {
         return String.format("Kleur: %s\nOmtrek: %.4f\nOppervlakte: %.4f",
                 this.kleur, this.geefOmtrek(), this.geefOppervlakte());
+    }
+
+    @Override
+    public int compareTo(Figuur anderFiguur) {
+        if (this.geefOppervlakte() > anderFiguur.geefOppervlakte()) {
+            return 1;
+        } else if (this.geefOppervlakte() < anderFiguur.geefOppervlakte()) {
+            return -1;
+        } else {
+            return 0;
+        }
     }
 }

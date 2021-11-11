@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * @author Vincent Velthuizen <v.r.velthuizen@pl.hanze.nl>
@@ -22,7 +23,7 @@ public class Oppervlak {
             mijnFiguren.add(figuur);
             System.out.println("Dit figuur is toegevoegd");
         } else {
-            System.out.println("Dit figuur is te groot (#NoemJeMijNouDik?)");
+            System.out.println("Dit figuur is te groot");
         }
     }
 
@@ -46,6 +47,7 @@ public class Oppervlak {
     public String toString() {
         String eenReturn = "";
 
+        Collections.sort(mijnFiguren);
         for (Figuur figuur : mijnFiguren) {
             eenReturn += figuur.toString() + "\n\n";
         }

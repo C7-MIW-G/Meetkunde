@@ -19,7 +19,7 @@ public class MeetkundeLauncher {
         oppervlak.voegFiguurToe(new Rechthoek(11, 5, new Punt(5, 7), "oranje"));
         oppervlak.voegFiguurToe(new Rechthoek(5, 8, new Punt(5, 3), "blauw"));
 
-        toonInformatieAlleFiguren(oppervlak.geefFigurenMetGrotereOppervlakte(20));
+        System.out.println(oppervlak);
     }
 
     public static void toonInformatie(Figuur figuur) {
