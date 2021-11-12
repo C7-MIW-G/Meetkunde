@@ -1,0 +1,35 @@
+public java.lang.String toString() {
+return String.format(##
+#if ( $class.hasSuper )
+#set ($i = 1)
+"%s##
+#else
+"##
+#set ($i = 0)
+#end
+#foreach ($member in $members)
+#if ($i != 0)##
+, ##
+#end
+$member.name: %s##
+#set ($i = $i + 1)
+#end
+", ##
+#set ($i = 0)
+#if ( $class.hasSuper )
+super.toString()##
+#set ($i = $i + 1)
+#end
+#foreach ($member in $members)
+    #if ($i != 0)
+    , ##
+    #end
+    #if ($member.primitiveArray || $member.objectArray)
+    java.util.Arrays.toString(this.$member.name)##
+    #else
+    this.$member.name ##
+    #end
+    #set ($i = $i + 1)
+#end
+);
+}
