@@ -2,7 +2,11 @@ package controller;
 
 import model.*;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.Scanner;
 
 /**
  * @author Vincent Velthuizen <v.r.velthuizen@pl.hanze.nl>
@@ -11,15 +15,35 @@ import java.util.ArrayList;
 public class MeetkundeLauncher {
 
     public static void main(String[] args) {
-        Oppervlak oppervlak = new Oppervlak(10, 7);
-        oppervlak.voegFiguurToe(new Rechthoek(3, 3, new Punt(0, 7), "rood"));
-        oppervlak.voegFiguurToe(new Rechthoek(3, 2, new Punt(0, 4), "geel"));
-        oppervlak.voegFiguurToe(new Rechthoek(5, 2, new Punt(0, 2), "groen"));
-        oppervlak.voegFiguurToe(new Rechthoek(5, 2, new Punt(3, 7), "paars"));
-        oppervlak.voegFiguurToe(new Rechthoek(11, 5, new Punt(5, 7), "oranje"));
-        oppervlak.voegFiguurToe(new Rechthoek(5, 8, new Punt(5, 3), "blauw"));
+        ArrayList<String> regelsUitBestand = new ArrayList<>();
+        File rechthoekenBestand = new File("resources/Rechthoek.csv");
+        try {
+            Scanner bestandsScanner = new Scanner(rechthoekenBestand);
+            while (bestandsScanner.hasNextLine()) {
+                regelsUitBestand.add(bestandsScanner.nextLine());
+            }
+        } catch (FileNotFoundException nietGevonden) {
+            System.out.println("Het bestand is niet gevonden bestandsnaam: " + rechthoekenBestand.toString());
+        }
 
-        System.out.println(oppervlak);
+        if (regelsUitBestand.size() > 0) {
+            ArrayList<Rechthoek> rechthoeken = new ArrayList<>();
+            for (String regelMetRechthoek : regelsUitBestand) {
+                String[] regelArray = regelMetRechthoek.split(",");
+
+                double lengte = Double.parseDouble(regelArray[0]);
+                double breedte = Double.parseDouble(regelArray[1]);
+                double xCoordinaat = Double.parseDouble(regelArray[2]);
+                double yCoordinaat = Double.parseDouble(regelArray[3]);
+                String kleur = regelArray[4];
+
+                rechthoeken.add(new Rechthoek(lengte, breedte, new Punt(xCoordinaat, yCoordinaat), kleur));
+            }
+
+            for (Rechthoek rechthoek : rechthoeken) {
+                System.out.println(rechthoek + "\n");
+            }
+        }
     }
 
     public static void toonInformatie(Figuur figuur) {
