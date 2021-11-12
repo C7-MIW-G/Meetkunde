@@ -4,6 +4,7 @@ import model.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -40,10 +41,21 @@ public class MeetkundeLauncher {
                 rechthoeken.add(new Rechthoek(lengte, breedte, new Punt(xCoordinaat, yCoordinaat), kleur));
             }
 
-            for (Rechthoek rechthoek : rechthoeken) {
-                System.out.println(rechthoek + "\n");
+            File uitvoerBestand = new File("resources/Rechthoeken.txt");
+            try {
+                PrintWriter printWriter = new PrintWriter(uitvoerBestand);
+
+                for (Rechthoek rechthoek : rechthoeken) {
+                    printWriter.println(rechthoek + "\n");
+                }
+
+                printWriter.close();
+            } catch (FileNotFoundException fileNotFoundException) {
+                fileNotFoundException.printStackTrace();
             }
         }
+
+
     }
 
     public static void toonInformatie(Figuur figuur) {
