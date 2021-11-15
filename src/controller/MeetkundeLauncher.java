@@ -1,5 +1,7 @@
 package controller;
 
+import database.DBaccess;
+import database.PuntDAO;
 import model.*;
 
 import java.io.File;
@@ -28,34 +30,17 @@ public class MeetkundeLauncher {
         String mainUser = "userFiguren";
         String mainUserPassword = "userFigurenPW";
 
-        String connectionURL = PREFIX_CONNECTION_URL + databaseName + CONNECTION_SETTINGS;
-        Connection connection = null;
-        try {
-            Class.forName(MYSQL_DRIVER);
-            connection = DriverManager.getConnection(connectionURL, mainUser, mainUserPassword);
-        } catch (ClassNotFoundException classNotFoundException) {
-            System.out.println("Driver niet gevonden.");
-        } catch (SQLException sqlException) {
-            System.out.println("SQL Exception: " + sqlException.getMessage());
+        DBaccess dBaccess = new DBaccess(databaseName, mainUser, mainUserPassword);
+        dBaccess.openConnection();
+
+        PuntDAO puntDAO = new PuntDAO(dBaccess);
+        puntDAO.slaPuntOp(new Punt(4, -2));
+
+        ArrayList<Punt> punten = puntDAO.getPunten();
+        for (Punt punt : punten) {
+            System.out.println(punt + "\n");
         }
 
-        if (connection != null) {
-            System.out.println("De verbinding is gemaakt!");
-            String sql = "SELECT * FROM punt WHERE xcoordinaat > 0;";
-            try {
-                PreparedStatement preparedStatement = connection.prepareStatement(sql);
-                ResultSet resultSet = preparedStatement.executeQuery();
-                while (resultSet.next()) {
-                    double xCoordinaat = resultSet.getDouble("xcoordinaat");
-                    double yCoordinaat = resultSet.getDouble("ycoordinaat");
-                    System.out.println(new Punt(xCoordinaat, yCoordinaat));
-                }
-                connection.close();
-            } catch (SQLException sqlException) {
-                System.out.println(sqlException);
-            }
-
-        }
     }
 
     public static void toonInformatie(Figuur figuur) {
