@@ -5,6 +5,10 @@ import model.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -14,48 +18,41 @@ import java.util.Scanner;
  * Spelen met de klassen uit het model
  */
 public class MeetkundeLauncher {
+    private static final String MYSQL_DRIVER = "com.mysql.cj.jdbc.Driver";
+    private static final String PREFIX_CONNECTION_URL = "jdbc:mysql://localhost:3306/";
+    private static final String CONNECTION_SETTINGS = "?useSSL=false" +
+            "&allowPublicKeyRetrieval=true" +
+            "&useJDBCCompliantTimezoneShift=true" +
+            "&useLegacyDatetimeCode=false" +
+            "&serverTimezone=UTC";
 
     public static void main(String[] args) {
-        ArrayList<String> regelsUitBestand = new ArrayList<>();
-        File rechthoekenBestand = new File("resources/Rechthoek.csv");
+        String databaseName = "Figuren";
+        String mainUser = "userFiguren";
+        String mainUserPassword = "userFigurenPW";
+
+        String connectionURL = PREFIX_CONNECTION_URL + databaseName + CONNECTION_SETTINGS;
+        Connection connection = null;
         try {
-            Scanner bestandsScanner = new Scanner(rechthoekenBestand);
-            while (bestandsScanner.hasNextLine()) {
-                regelsUitBestand.add(bestandsScanner.nextLine());
-            }
-        } catch (FileNotFoundException nietGevonden) {
-            System.out.println("Het bestand is niet gevonden bestandsnaam: " + rechthoekenBestand.toString());
+            Class.forName(MYSQL_DRIVER);
+            connection = DriverManager.getConnection(connectionURL, mainUser, mainUserPassword);
+        } catch (ClassNotFoundException classNotFoundException) {
+            System.out.println("Driver niet gevonden.");
+        } catch (SQLException sqlException) {
+            System.out.println("SQL Exception: " + sqlException.getMessage());
         }
 
-        if (regelsUitBestand.size() > 0) {
-            ArrayList<Rechthoek> rechthoeken = new ArrayList<>();
-            for (String regelMetRechthoek : regelsUitBestand) {
-                String[] regelArray = regelMetRechthoek.split(",");
-
-                double lengte = Double.parseDouble(regelArray[0]);
-                double breedte = Double.parseDouble(regelArray[1]);
-                double xCoordinaat = Double.parseDouble(regelArray[2]);
-                double yCoordinaat = Double.parseDouble(regelArray[3]);
-                String kleur = regelArray[4];
-
-                rechthoeken.add(new Rechthoek(lengte, breedte, new Punt(xCoordinaat, yCoordinaat), kleur));
-            }
-
-            File uitvoerBestand = new File("resources/Rechthoeken.txt");
+        if (connection != null) {
+            System.out.println("De verbinding is gemaakt!");
+            String sql = "INSERT INTO punt VALUES (3, -5);";
             try {
-                PrintWriter printWriter = new PrintWriter(uitvoerBestand);
-
-                for (Rechthoek rechthoek : rechthoeken) {
-                    printWriter.println(rechthoek + "\n");
-                }
-
-                printWriter.close();
-            } catch (FileNotFoundException fileNotFoundException) {
-                fileNotFoundException.printStackTrace();
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.executeUpdate();
+                connection.close();
+            } catch (SQLException sqlException) {
+                System.out.println(sqlException);
             }
         }
-
-
     }
 
     public static void toonInformatie(Figuur figuur) {
