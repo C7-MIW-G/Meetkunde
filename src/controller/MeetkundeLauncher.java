@@ -5,10 +5,7 @@ import model.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -44,14 +41,20 @@ public class MeetkundeLauncher {
 
         if (connection != null) {
             System.out.println("De verbinding is gemaakt!");
-            String sql = "INSERT INTO punt VALUES (3, -5);";
+            String sql = "SELECT * FROM punt WHERE xcoordinaat > 0;";
             try {
                 PreparedStatement preparedStatement = connection.prepareStatement(sql);
-                preparedStatement.executeUpdate();
+                ResultSet resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    double xCoordinaat = resultSet.getDouble("xcoordinaat");
+                    double yCoordinaat = resultSet.getDouble("ycoordinaat");
+                    System.out.println(new Punt(xCoordinaat, yCoordinaat));
+                }
                 connection.close();
             } catch (SQLException sqlException) {
                 System.out.println(sqlException);
             }
+
         }
     }
 
