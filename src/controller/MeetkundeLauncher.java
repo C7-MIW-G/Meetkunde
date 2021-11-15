@@ -1,5 +1,6 @@
 package controller;
 
+import database.CirkelDAO;
 import database.DBaccess;
 import database.PuntDAO;
 import model.*;
@@ -33,14 +34,9 @@ public class MeetkundeLauncher {
         DBaccess dBaccess = new DBaccess(databaseName, mainUser, mainUserPassword);
         dBaccess.openConnection();
 
-        PuntDAO puntDAO = new PuntDAO(dBaccess);
-        puntDAO.slaPuntOp(new Punt(4, -2));
-
-        ArrayList<Punt> punten = puntDAO.getPunten();
-        for (Punt punt : punten) {
-            System.out.println(punt + "\n");
-        }
-
+        CirkelDAO cirkelDAO = new CirkelDAO(dBaccess);
+        cirkelDAO.slaCirkelOp(new Cirkel(5, new Punt(3, 7), "Oranje"));
+        dBaccess.closeConnection();
     }
 
     public static void toonInformatie(Figuur figuur) {

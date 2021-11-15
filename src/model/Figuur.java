@@ -50,4 +50,8 @@ public abstract class Figuur implements ToelaatbaarInOppervlak, Comparable<Figuu
             return 0;
         }
     }
+
+    public String getKleur() {
+        return kleur;
+    }
 }
